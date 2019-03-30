@@ -23,9 +23,8 @@ def CalculateTA(x,y,z):
 
 def featureExtractor(myPath,label,classNum):
     global features
-    FeaturesAll = np.zeros((1,15))
+    FeaturesAll = np.zeros((1,14))
     onlyfiles = [f for f in os.listdir(myPath)]  # if isfile(join(myPath, f))]
-##    print('onlyfilegws',onlyfiles)
     # print(len(onlyfiles))
     print()
     for currentFileNum in range(len(onlyfiles)):
@@ -34,14 +33,13 @@ def featureExtractor(myPath,label,classNum):
         fileName = myPath + onlyfiles[currentFileNum]
         # print(onlyfiles[currentFileNum])
         num_lines = sum(1 for line in open(fileName))
-        print('numlines=',num_lines)
+        print(num_lines)
         f = open(fileName, 'r')
         message = f.readlines()
         aa = np.array([])
         for lineNum in range(1,num_lines-1):
             x = message[lineNum]
             currentLine = np.fromstring(x, dtype=float, sep=',')
-            # print ('current=',currentLine)
             aa = np.concatenate((aa, currentLine), axis=0)
             f.close()
             #print(aa)
@@ -83,7 +81,7 @@ def featureExtractor(myPath,label,classNum):
         TAvalue = CalculateTA(xMean, yMean, zMean)
 
         features = [xMean, yMean, zMean, xMin, yMin, zMin, xMax, yMax, zMax,
-                xStd, yStd, zStd, SMA, SVMvalue, TAvalue]
+                xStd, yStd, zStd,SVMvalue, TAvalue]
         # ff = [features , features]
         FeaturesAll = np.vstack((FeaturesAll, features))
 
